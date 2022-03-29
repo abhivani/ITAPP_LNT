@@ -1,0 +1,5 @@
+D:\L&T Project\ITAPP\ITApp.Web\ITApp.Model\bin\Debug\ITApp.Model.dll
+D:\L&T Project\ITAPP\ITApp.Web\ITApp.Model\bin\Debug\ITApp.Model.pdb
+D:\L&T Project\ITAPP\ITApp.Web\ITApp.Model\obj\Debug\ITApp.Model.dll
+D:\L&T Project\ITAPP\ITApp.Web\ITApp.Model\obj\Debug\ITApp.Model.pdb
+D:\L&T Project\ITAPP\ITApp.Web\ITApp.Model\obj\Debug\ITApp.Model.csprojAssemblyReference.cache

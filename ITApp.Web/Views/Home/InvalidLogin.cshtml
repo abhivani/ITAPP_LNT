@@ -1,0 +1,319 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" href="~/assets/Images/LTlogo.png" sizes="16x16" /> <!--Print logo inside title-->
+    <title>IT APP FORMS 2021</title>
+    @*<link rel="manifest" href="~/manifest.json">*@
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @*<script src="~/Content/jquery-1.12.4.js"></script>*@
+    <script type="text/javascript">
+ $(document).ready(function () {
+   if ('@ViewBag.Result' != '') {
+       $.toaster('@ViewBag.Result', 'Validation', 'danger');
+        }
+ });
+
+    </script>
+    <script type="text/javascript">
+        function imgError(image) {
+            image.onerror = "";
+            image.src = "/LSI/Content/images/LTlogo1.png";
+            //image.src = "/IMRApproval/Content/images/user.png";
+            return true;
+        }
+        function NoInitimg(image) {
+            image.onerror = "";
+            image.src = "/LSI/Content/images/LTlogo1.png";
+            //image.src = "/IMRApproval/Content/images/Init_Image/NoImage.jpg"
+            //image.src = "/Lakshya/Content/images/Init_Image/NoImage.jpg"
+            return true;
+        }
+    </script>
+
+    <style type="text/css">
+        .form-control[readonly], .form-control2[readonly], .textarea[readonly] {
+            background-color: white;
+        }
+
+
+        .container {
+            max-width: 1350px;
+        }
+
+
+        .CustomLabel {
+            color: #0099cc;
+            font-weight: bold;
+            margin-bottom: 0px;
+        }
+
+        .panel {
+            border-radius: 0px;
+        }
+
+        .panel-heading {
+            border-radius: 0px;
+        }
+
+        .btn {
+            box-shadow: 4px 4px 4px #888888;
+            border: none;
+            border-radius: 0px;
+            color: white;
+        }
+
+        .toggle-vis {
+            font-weight: bold;
+            cursor: pointer;
+            color: #004d99;
+        }
+
+
+        .highlight {
+            color: #74a9d8;
+        }
+
+        .toaster {
+            margin-top: 130px;
+        }
+        /*.glyphicon{
+
+            text-shadow: 1px 1px 1px ;
+        }*/
+        .glyphicon-trash {
+            color: red;
+        }
+
+        .image img {
+            -webkit-transition: all 0.5s ease; /* Safari and Chrome */
+            -moz-transition: all 0.5s ease; /* Firefox */
+            -o-transition: all 0.5s ease; /* IE 9 */
+            -ms-transition: all 0.5s ease; /* Opera */
+            transition: all 0.5s ease;
+        }
+
+        .image:hover img {
+            z-index: 500;
+            -webkit-transform: scale(3); /* Safari and Chrome */
+            -moz-transform: scale(3); /* Firefox */
+            -ms-transform: scale(3); /* IE 9 */
+            -o-transform: scale(3); /* Opera */
+            transform: scale(3);
+        }
+    </style>
+
+    <style type="text/css">
+        .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+            background-color: #004d99;
+        }
+
+        .table thead > tr > th {
+            vertical-align: top;
+        }
+
+        .TabColor > .active > a {
+            background-color: #004d99 !important;
+            color: white !important;
+        }
+
+        .nav-tabs-right {
+            text-align: right;
+        }
+
+            .nav-tabs-right > li {
+                display: inline-block;
+                float: none;
+            }
+
+        hr {
+            margin-bottom: 8px;
+            margin-top: 8px;
+        }
+
+        h4, h5, h6, h1, h2, h3 {
+            margin: 10px;
+        }
+
+
+        th {
+            background-color: #6bc5e1;
+            color: #004d99;
+        }
+
+        .alterTh {
+            background-color: #9999ff;
+        }
+
+        .CustomeHide {
+            display: none;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .CustomBtn {
+            border-right-color: white;
+            border-right-width: 2px;
+            /*background-color: #004d99;*/
+        }
+
+        .CustomMrg {
+            margin-right: 25px;
+        }
+
+        .notify {
+            position: absolute;
+            top: 4px;
+            right: 7px;
+            text-align: center;
+            font-size: 14px;
+            padding: 2px 3px;
+            line-height: .9;
+        }
+    </style>
+</head>
+
+<!--method,controller,post/get method-->
+<!--method,controller,post/get method-->
+
+
+@using (@Html.BeginForm("Login", "Home", FormMethod.Post, new { id = "LoginForm" }))
+{
+    <body style="font-size: 14px; font-family: 'Roboto', Helvetica, sans-serif;">
+
+        <div class="navbar-fixed-top" style="height: 70px; background-color: white; ">
+
+            <div class="row">
+                <div class="col-md-12">
+                    @*<img src="~/Content/images/LTlogo.png" style="margin: 20px;  float: left" height="62px" />*@
+
+
+                    @*<img src="~/Content/images/LnThe.png" style="margin: 5px; margin-left: 20px; float: left" height="62px" />
+
+                        <div style="margin-top: 15px; float: right; font-size: 28px; font-weight: bold; margin-right: 20px; color: #004072; ">
+
+
+                        </div>*@
+                    <img src="~/Content/images/LTlogo.png" style="margin: 1px;  float: left" height="62px">
+
+                    <div style="margin-top: 15px; float: right; font-size: 28px; font-weight: bold;margin-right: 20px; color: #004072;">IT APP FORMS</div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:5em;margin-left:2px;margin-right:2px">
+            <div class="panel panel-default" style="margin: 2%">
+                <div class="panel-body" style="height: auto; padding: 10px;">
+                    <h2>@ViewBag.ErrorMsg</h2>
+                    <h3>
+                        Click <a href="@Url.Action("TokenLogout","Home",new { paramUstokenId=ViewBag.TempUstokenId })">here</a>
+                        to go to Login page.
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="navbar navbar-default navbar-fixed-bottom pe" style="background-color: #428bca; min-height: 35px">
+            <div class="row">
+                <center>
+                    <h6 class="col-md-12" style="color:white">
+                        &copy; 2021 L&T. All rights reserved.
+                    </h6>
+                </center>
+            </div>
+        </div>
+    </body>
+}
+</html>
+@*@Scripts.Render("~/bundles/jquery")*@
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+@*<script src="~/assets/js/jquery-ui.min.js"></script>
+    <script src="~/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
+    <script src="~/Scripts/toastr.min.js"></script>*@
+
+
+
+@*===========================*@
+
+@*<script src="~/Content/jquery-1.12.4.js"></script>*@
+@*<script src="~/Content/jquery.dataTables.min.js"></script>*@
+
+<link href="~/Content/js/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/js/responsive.bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/js/buttons.bootstrap.min.css" rel="stylesheet" />
+@*<link href="~/Content/js/fixedHeader.dataTables.min.css" rel="stylesheet" />*@
+
+@* <link href=" https://cdn.datatables.net/buttons/1.3.1/css/buttons.bootstrap.min.css" rel="stylesheet" />*@
+
+
+<script src="~/Content/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/js/dataTables.bootstrap.min.js"></script>
+<script src="~/Content/js/dataTables.responsive.min.js"></script>
+<script src="~/Content/js/responsive.bootstrap.min.js"></script>
+@*<script src="~/Content/js/dataTables.fixedHeader.min.js"></script>*@
+
+<script src="~/Content/js/dataTables.buttons.min.js"></script>
+<script src="~/Content/js/buttons.bootstrap.min.js"></script>
+<script src="~/Content/js/jszip.min.js"></script>
+<script src="~/Content/js/buttons.html5.min.js"></script>
+<script src="~/Content/js/buttons.colVis.min.js"></script>
+<script src="~/Content/js/stringMonthYear.js"></script>
+<script src="~/Content/js/date-uk.js"></script>
+
+
+@*<script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.15/sorting/stringMonthYear.js"></script>*@
+
+<script src="~/Content/jquery-ui.min.js"></script>
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+@*<script src="~/Content/js/bootstrap-multiselect.js"></script>
+    <script src="~/Content/js/bootstrap-multiselect.js"></script>*@
+
+@*<script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/jquery-ui.min.js" type="text/javascript"></script>
+    <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css"     rel="Stylesheet" type="text/css" />*@
+
+<script src="~/Scripts/jquery.validate.js"></script>
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+
+
+
+
+
+@*<script type="text/javascript">
+         var WebsiteURL = '@(System.Configuration.ConfigurationManager.AppSettings["WebsiteURL"])';
+             $('#Username').autocomplete({
+                 source: function (request, response) {
+                    $.ajax({
+                        url: WebsiteURL + "/Home/GetUsers",
+                        dataType: "json",
+                        type: "POST",
+                        delay: 250,
+                        async: false,
+                        data: { sSearch: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.text, value: item.Id, text: item.Id };
+                            }));
+                        }
+                    });
+                },
+                autoFocus: true,
+                minLength: 1,
+             });
+    </script>*@

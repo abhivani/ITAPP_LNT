@@ -1,0 +1,262 @@
+﻿@model ITApp.Model.DamageDeviceFormsVM
+@{
+    ViewBag.Title = "DamageDeviceForms";
+}
+<link href="~/Content/dataTables/datatables.min.css" rel="stylesheet" />
+<script src="~/Content/js/dataTables/datatables.min.js"></script>
+<script src="~/Content/js/dataTables/dataTables.bootstrap4.min.js"></script>
+<script src="~/Content/dataTables.fixedColumns.min.js"></script>
+<script src="~/Content/JSPages/DamageDeviceForm.js"></script>
+<script src="~/Content/validate/jquery.validate.min.js"></script>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Damage Device Forms</h2>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form id="frmtblDamageDevice">
+                        @Html.HiddenFor(s => s.RequestFormId)
+                        @Html.HiddenFor(s => s.DamageDeviceFormId)
+                        @Html.HiddenFor(s => s.requestFomsVM.PendingWith)
+                        @Html.HiddenFor(s => s.requestFomsVM.Status)
+                        @Html.HiddenFor(s => s.requestFomsVM.IsPending)
+                        @Html.HiddenFor(s => s.requestFomsVM.ReturnRejectWith)
+                        @Html.HiddenFor(s => s.requestFomsVM.LastPendingWith)
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Request No</label>
+
+                                    @Html.TextBoxFor(s => s.requestFomsVM.RequestNo, new { @class = "form-control", @placeholder = "Request No", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Request Date</label>
+                                    @Html.TextBoxFor(s => s.requestFomsVM.RequestDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @placeholder = "Request Date", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>PS No</label>
+
+                                    @Html.TextBoxFor(s => s.requestFomsVM.PsNo, new { @class = "form-control", @placeholder = "Ps No", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Name</label>
+                                    @Html.TextBoxFor(s => s.Name, new { @class = "form-control", @placeholder = "Name", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Department Name</label>
+
+                                    @Html.TextBoxFor(s => s.DepartmentName, new { @class = "form-control", @placeholder = "Department Name", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Department Head</label>
+                                    @Html.TextBoxFor(s => s.DepartmentHead, new { @class = "form-control", @placeholder = "Department Head", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>On Behalf of</label>
+
+                                    @Html.TextBoxFor(s => s.OnBehalfof, new { @class = "form-control", @placeholder = "On Behalf of" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Location <span class="text-danger">*</span></label>
+                                    @Html.DropDownListFor(s => s.Location, new List<SelectListItem>
+                                                    {
+                                                       new SelectListItem{ Text="L&T Hazira East", Value = "L&T Hazira East" },
+                                                       new SelectListItem{ Text="L&T Hazira West", Value = "L&T Hazira West" },
+                                                       new SelectListItem{ Text="LTPC", Value = "LTPC" },
+                                                       new SelectListItem{ Text="L&T Powai", Value = "L&T Powai" },
+                                                       new SelectListItem{ Text="VHEW", Value = "VHEW" },
+                                                       }, "--Select Location--", new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Damaged Device Name</label>
+
+                                    @Html.TextBoxFor(s => s.DamagedDeviceName, new { @class = "form-control", @placeholder = "Damaged Device Name" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Damaged Device No</label>
+
+                                    @Html.TextBoxFor(s => s.DamagedDeviceNo, new { @class = "form-control", @placeholder = "Damaged Device No" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Damage Reason</label>
+                                @Html.TextAreaFor(s => s.DamageReason, new { @class = "form-control", @placeholder = "Damage Reason" })
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="clsDepartmentHead">
+                                    <label>DH Remarks</label>
+
+                                    @Html.TextAreaFor(s => s.DHRemarks, new { @class = "form-control", @placeholder = "DH Remarks" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="clsITHelpDeskAdmin">
+                                    <label>IT Helpdesk Admin Remarks</label>
+                                    @Html.TextAreaFor(s => s.ITHelpdeskAdminRemarks, new { @class = "form-control", @placeholder = "IT Helpdesk Admin Remarks" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="clsITHelpDeskone">
+                                    <label>IT Helpdesk Remarks</label>
+                                    @Html.TextAreaFor(s => s.ITHelpdeskRemarks, new { @class = "form-control", @placeholder = "IT Helpdesk Remarks" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="clsITHelpDesktwo">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="">
+                                        <label>Status</label>
+                                        @Html.DropDownListFor(s => s.DStatus, new List<SelectListItem>
+                                                        {
+                                                           new SelectListItem{ Text="Under Procurement", Value = "Under Procurement" },
+                                                           new SelectListItem{ Text="Close", Value = "Close" },
+                                                           }, "--Select Status--", new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="HideClass">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div>
+                                        <button type="button" value="Submit" id="btnSubmit" onclick="DamageDeviceController.funSubmitDamageDeviceFormValue();" style="display: inline-block;  " class="btn btn-success"><span class=""></span> Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ApproveClass">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <button type="button" value="Approve" id="btnApprove" onclick="DamageDeviceController.funApproveDamageDeviceFormValue();" style="display: inline-block;  " class="btn btn-primary clsapprovebtn"><span class=""></span> Approve</button>
+                                    <button type="button" value="Close" id="btnClose" onclick="DamageDeviceController.funCloseDamageDeviceFormValue();" style="display: inline-block;  " class="btn btn-primary clsclosebtn"><span class=""></span>Complete</button>
+                                    <button type="button" value="Return" id="btnReturn" onclick="DamageDeviceController.funReturnDamageDeviceFormValue();" style="display: inline-block;  " class="btn btn-warning clsReturnbtn"><span class=""></span> Return</button>
+                                    <button type="button" value="Reject" id="btnReject" onclick="DamageDeviceController.funRejectDamageDeviceFormValue();" style="display: inline-block;  " class="btn btn-danger clsRejectbtn"><span class=""></span> Reject</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clsProcessSteps">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div id="" class="container">
+                <div class="PageSeparator col-md-12">
+                    <span class="PageSeparator-Span" id="spnMassage">Life Cycle</span>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="ibox">
+                            <div class="ibox-content" id="divRequestLine">
+                                <div class="form-group">
+                                    <div class="mt-element-step">
+                                        <div class="row step-line">
+                                            @*@if (ViewBag.Status == Enums.TarStatus.Submitted.DescriptionAttr())
+                                                {*@
+
+                                            @*//1*@
+                                            @if (Model.damageDeviceFormProcessBarVM.Initiate != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col first done" style="width:22%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Initiate <br /> &nbsp;</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.damageDeviceFormProcessBarVM.Initiate</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col " style="width:22%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Initiate <br /> &nbsp;</div><div class="mt-step-number bg-white">1</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*//2*@
+                                            @if (Model.damageDeviceFormProcessBarVM.DepartmentHeadApprove != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:22%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Department Head <br /> Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.damageDeviceFormProcessBarVM.DepartmentHeadApprove</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:22%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Department Head <br /> Approval</div><div class="mt-step-number bg-white">2</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*//3*@
+                                            @if (Model.damageDeviceFormProcessBarVM.ITHelpdeskAdminApprove != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:22%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Helpdesk Admin <br /> Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.damageDeviceFormProcessBarVM.ITHelpdeskAdminApprove</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:22%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Helpdesk Admin <br /> Approval</div><div class="mt-step-number bg-white">3</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*//4*@
+                                            @if (Model.damageDeviceFormProcessBarVM.ITHelpdeskApprove != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:22%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Helpdesk <br /> Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.damageDeviceFormProcessBarVM.ITHelpdeskApprove</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:22%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Helpdesk <br /> Approval</div><div class="mt-step-number bg-white">4</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+
+                                            @*}*@
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+         DamageDeviceController.GetfunDocumentInit();
+    });
+</script>

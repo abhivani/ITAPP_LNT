@@ -1,0 +1,424 @@
+﻿@model ITApp.Model.USBRequestFormsVM
+@{
+    ViewBag.Title = "USBRequest";
+}
+
+
+<link href="~/Content/dataTables/datatables.min.css" rel="stylesheet" />
+<script src="~/Content/js/dataTables/datatables.min.js"></script>
+<script src="~/Content/js/dataTables/dataTables.bootstrap4.min.js"></script>
+<script src="~/Content/dataTables.fixedColumns.min.js"></script>
+<script src="~/Content/JSPages/USBRequestForm.js"></script>
+<script src="~/Content/validate/jquery.validate.min.js"></script>
+<style>
+    /* .container {
+        width: 100%;
+        position: absolute;
+        z-index: 1;
+    }*/
+
+    .progressbar li {
+        float: left;
+        width: 15%;
+        position: relative;
+        /* text-align: center;*/
+    }
+    /* .progressbar li:before {
+            content: "1";
+            width: 30px;
+            height: 30px;
+        }*/
+
+    /*  .progressbar li:before {
+            content: "";
+            width: 30px;
+            height: 30px;
+             border: 2px solid #bebebe;
+            display: block;
+             margin: 0 auto 10px auto;
+            border-radius: 50%;
+            line-height: 27px;
+            background: white;
+            color: #bebebe;
+            text-align: center;
+            font-weight: bold;
+        }*/
+
+
+    .progressbar {
+        counter-reset: step;
+    }
+
+        .progressbar li:before {
+            content: counter(step);
+            counter-increment: step;
+            width: 100px;
+            height: 100px;
+            border: 2px solid #bebebe;
+            display: block;
+            margin-top: 0;
+            margin-right: auto;
+            margin-bottom: 10px;
+            margin-left: 0;
+            border-radius: 50%;
+            line-height: 100px;
+            background: white;
+            color: #bebebe;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .progressbar li:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 15px;
+            background: #979797;
+            top: 45px;
+            left: -90%;
+            z-index: -1;
+        }
+
+        .progressbar li:first-child:after {
+            content: none;
+        }
+
+        .progressbar li.active:first-child:before {
+            border-color: #3aac5d;
+            background: #3aac5d;
+            color: white;
+        }
+
+        .progressbar li.active + li:after {
+            background: #3aac5d;
+        }
+
+        .progressbar li.active + li.active:before {
+            border-color: #3aac5d;
+            background: #3aac5d;
+            color: white;
+            /*background: #fff;*/
+        }
+
+        /*.progressbar li::after {
+            background: #fff;
+        }*/
+
+        /*.progressbar li.active:first-child::after {
+            background: #fff;
+        }*/
+
+        /* .progressbar li.pending:before {
+            background: #fff;
+        }*/
+
+        .progressbar li.pending + li:before {
+            background: #fff;
+        }
+</style>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>USB Request Forms</h2>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form id="frmtblUSBRequest">
+                        @Html.HiddenFor(s => s.RequestFormId)
+                        @Html.HiddenFor(s => s.USBRequestFormId)
+                        @Html.HiddenFor(s => s.requestFomsVM.PendingWith)
+                        @Html.HiddenFor(s => s.requestFomsVM.Status)
+                        @Html.HiddenFor(s => s.requestFomsVM.IsPending)
+                        @Html.HiddenFor(s => s.requestFomsVM.ReturnRejectWith)
+                        @Html.HiddenFor(s => s.requestFomsVM.LastPendingWith)
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Request No</label>
+
+                                    @Html.TextBoxFor(s => s.requestFomsVM.RequestNo, new { @class = "form-control", @placeholder = "Request No", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Request Date</label>
+                                    @Html.TextBoxFor(s => s.requestFomsVM.RequestDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @placeholder = "Request Date", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>PS No</label>
+
+                                    @Html.TextBoxFor(s => s.requestFomsVM.PsNo, new { @class = "form-control", @placeholder = "Ps No", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Name</label>
+                                    @Html.TextBoxFor(s => s.Name, new { @class = "form-control", @placeholder = "Name", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Department Name</label>
+
+                                    @Html.TextBoxFor(s => s.DepartmentName, new { @class = "form-control", @placeholder = "Department Name", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Department Head</label>
+                                    @Html.TextBoxFor(s => s.DepartmentHead, new { @class = "form-control", @placeholder = "Department Head", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Reason</label>
+
+                                    @Html.TextAreaFor(s => s.Reason, new { @class = "form-control", @placeholder = "Reason" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Location <span class="text-danger">*</span></label>
+                                    @Html.DropDownListFor(s => s.Location, new List<SelectListItem>
+                                                    {
+                                                       new SelectListItem{ Text="L&T Hazira East", Value = "L&T Hazira East" },
+                                                       new SelectListItem{ Text="L&T Hazira West", Value = "L&T Hazira West" },
+                                                       new SelectListItem{ Text="LTPC", Value = "LTPC" },
+                                                       new SelectListItem{ Text="L&T Powai", Value = "L&T Powai" },
+                                                       new SelectListItem{ Text="VHEW", Value = "VHEW" },
+                                                       }, "--Select Location--", new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div>
+                                    <label>Notes</label>
+
+                                    @Html.TextAreaFor(s => s.Notes, new { @class = "form-control", @placeholder = "Notes", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12" style="margin-bottom:13px">
+                                <div class="col-md-4">
+                                    <div class="checkbox-inline i-checks">
+                                        @* @Html.CheckBox("IsAccept", false, new { @class = "i-checks " })*@
+                                        @Html.CheckBoxFor(s => s.IsAccept, new { @class = "i-checks clsdis" })
+                                        <label>I Accept &nbsp;&nbsp;</label>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="clsDepartmentHead">
+                                    <label>DH Remarks</label>
+
+                                    @Html.TextBoxFor(s => s.DHRemarks, new { @class = "form-control", @placeholder = "DHRemarks" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="clsItDepartmentHead">
+                                    <label>IT DH Remarks</label>
+                                    @Html.TextBoxFor(s => s.ITDHRemarks, new { @class = "form-control", @placeholder = "IT DH Remarks" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="clsHelpdesk">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Serial No</label>
+
+                                    @Html.TextBoxFor(s => s.SerialNo, new { @class = "form-control", @placeholder = "Serial No" })
+
+                                </div>
+                                <div class="col-sm-6">
+
+                                    <label>Model</label>
+                                    @Html.TextBoxFor(s => s.Model, new { @class = "form-control", @placeholder = "Model" })
+
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Vendor</label>
+
+                                    @Html.TextBoxFor(s => s.Vendor, new { @class = "form-control", @placeholder = "Vendor" })
+
+                                </div>
+                                <div class="col-sm-6">
+
+                                    <label>Description</label>
+                                    @Html.TextBoxFor(s => s.Description, new { @class = "form-control", @placeholder = "Description" })
+
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="clsClose">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>OTP</label>
+
+                                    @Html.TextBoxFor(s => s.OTP, new { @class = "form-control", @placeholder = "OTP" })
+
+                                </div>
+                                <div class="col-sm-6">
+
+                                    <label>Remarks</label>
+                                    @Html.TextBoxFor(s => s.Remarks, new { @class = "form-control", @placeholder = "Remarks" })
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="HideClass">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div>
+                                        <button type="button" value="Submit" id="btnSubmit" onclick="USBRequestController.funSubmitUSBRequestFromValue();" style="display: inline-block;  " class="btn btn-success"><span class=""></span> Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ApproveClass">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <button type="button" value="Approve" id="btnApprove" onclick="USBRequestController.funApproveUSBRequestFromValue();" style="display: inline-block;  " class="btn btn-primary"><span class=""></span> Approve</button>
+                                    <button type="button" value="Return" id="btnReturn" onclick="USBRequestController.funReturnUSBRequestFromValue();" style="display: inline-block;  " class="btn btn-warning"><span class=""></span> Return</button>
+                                    <button type="button" value="Reject" id="btnReject" onclick="USBRequestController.funRejectUSBRequestFromValue();" style="display: inline-block;  " class="btn btn-danger"><span class=""></span> Reject</button>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="CloseClass">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                </div>
+                                <div class="col-sm-6">
+                                    <button type="button" value="Close" id="btnClose" onclick="USBRequestController.funCloseUSBRequestFromValue();" style="display: inline-block;  " class="btn btn-primary"><span class=""></span>Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clsProcessSteps">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div id="" class="container">
+                <div class="PageSeparator col-md-12">
+                    <span class="PageSeparator-Span" id="spnMassage">Life Cycle</span>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="ibox">
+                            <div class="ibox-content" id="divRequestLine">
+                                <div class="form-group">
+                                    <div class="mt-element-step">
+                                        <div class="row step-line">
+                                            @*@if (ViewBag.Status == Enums.TarStatus.Submitted.DescriptionAttr())
+                                                {*@
+
+                                            @*//1*@
+                                            @if (Model.uSBRequestFormsProcessBarVM.Initiate != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col first done" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Initiate <br /> &nbsp;</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.uSBRequestFormsProcessBarVM.Initiate</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col " style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Initiate <br /> &nbsp;</div><div class="mt-step-number bg-white">1</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*//2*@
+                                            @if (Model.uSBRequestFormsProcessBarVM.DepartmentHeadApproval != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Department Head <br /> Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.uSBRequestFormsProcessBarVM.DepartmentHeadApproval</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Department Head <br /> Approval</div><div class="mt-step-number bg-white">2</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*//3*@
+                                            @if (Model.uSBRequestFormsProcessBarVM.ITDepartmentHeadApproval != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Department Head <br /> Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.uSBRequestFormsProcessBarVM.ITDepartmentHeadApproval</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Department Head <br /> Approval</div><div class="mt-step-number bg-white">3</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*//4*@
+                                            @if (Model.uSBRequestFormsProcessBarVM.ITHelpdeskApproval != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Helpdesk <br /> Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.uSBRequestFormsProcessBarVM.ITHelpdeskApproval</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Helpdesk <br /> Approval</div><div class="mt-step-number bg-white">4</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*//5*@
+                                            @if (Model.uSBRequestFormsProcessBarVM.ITSecurity != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Security <br />Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.uSBRequestFormsProcessBarVM.ITSecurity</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Security <br />Approval</div><div class="mt-step-number bg-white">5</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*//6*@
+                                            @if (Model.uSBRequestFormsProcessBarVM.ITHelpdeskApprovalLast != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Helpdesk <br />Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.uSBRequestFormsProcessBarVM.ITHelpdeskApprovalLast</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Helpdesk <br />Approval</div><div class="mt-step-number bg-white">6</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*}*@
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        USBRequestController.GetfunDocumentInit();
+        //USBRequestController.funGetProcessSteps();
+    });
+</script>

@@ -1,0 +1,47 @@
+﻿@using ITApp.Utility
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    @*<img alt="image" class="rounded-circle" src="~/Content/images/int.png" style="height:52px" />*@
+                    <center><img class="rounded-circle" src="~/Content/images/lnt.png" style="height:52px" /></center>
+
+                </div>
+                <div class="logo-element">
+                    IN+
+                </div>
+            </li>
+            <li class="@Html.IsSelected(controller: "Home")">
+                <a href="@Url.Action("Index", "Home")"><i class="fa fa-dashboard"></i> <span class="nav-label" data-i18n="nav.dashboard">Dashboard</span></a>
+            </li>
+
+            @if (Session[Helper.SessionKey.Role].ToString() != "Initiator")
+            { 
+                <li class="@Html.IsSelected(controller: "RoleMaster")">
+                    <a href="@Url.Action("Index", "RoleMaster")"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.layouts">Role Master</span></a>
+                </li>
+            }
+            @*else*@
+            @* { *@
+            <li class="@Html.IsSelected(controller: "USBRequest")">
+                <a href="@Url.Action("USBRequest", "USBRequest")"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.layouts">USB Request Form</span></a>
+            </li>
+            <li class="@Html.IsSelected(controller: "DriveAccess")">
+                <a href="@Url.Action("DriveAcessForms", "DriveAccess")"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.layouts">Drive Access Form</span></a>
+            </li>
+            <li class="@Html.IsSelected(controller: "DamageDevice")">
+                <a href="@Url.Action("DamageDeviceForms", "DamageDevice")"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.layouts">Damage Device Form</span></a>
+            </li>
+            <li class="@Html.IsSelected(controller: "DeviceShifting")">
+                <a href="@Url.Action("DeviceShiftingForms", "DeviceShifting")"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.layouts">Device Shifting Form</span></a>
+            </li>
+            @*}*@
+
+            <li class="@Html.IsSelected(controller: "NewItRequisition")">
+                <a href="@Url.Action("NewItRequisitionForms", "NewItRequisition")"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.layouts">New IT Requisition</span></a>
+            </li>
+
+        </ul>
+    </div>
+</nav>

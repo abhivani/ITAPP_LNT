@@ -1,0 +1,321 @@
+﻿@model ITApp.Model.DeviceShiftingFormsVM
+@{
+    ViewBag.Title = "DeviceShiftingForms";
+}
+
+<link href="~/Content/dataTables/datatables.min.css" rel="stylesheet" />
+<script src="~/Content/js/dataTables/datatables.min.js"></script>
+<script src="~/Content/js/dataTables/dataTables.bootstrap4.min.js"></script>
+<script src="~/Content/dataTables.fixedColumns.min.js"></script>
+<script src="~/Content/JSPages/DeviceShiftingForms.js"></script>
+<script src="~/Content/validate/jquery.validate.min.js"></script>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Device Shifting Forms</h2>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form id="frmtblDeviceShifting">
+                        @Html.HiddenFor(s => s.RequestFormId)
+                        @Html.HiddenFor(s => s.DeviceShiftingFormId)
+                        @Html.HiddenFor(s => s.requestFomsVM.PendingWith)
+                        @Html.HiddenFor(s => s.requestFomsVM.Status)
+                        @Html.HiddenFor(s => s.requestFomsVM.IsPending)
+                        @Html.HiddenFor(s => s.requestFomsVM.ReturnRejectWith)
+                        @Html.HiddenFor(s => s.requestFomsVM.LastPendingWith)
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Request No</label>
+
+                                    @Html.TextBoxFor(s => s.requestFomsVM.RequestNo, new { @class = "form-control", @placeholder = "Request No", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Request Date</label>
+                                    @Html.TextBoxFor(s => s.requestFomsVM.RequestDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @placeholder = "Request Date", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>PS No</label>
+
+                                    @Html.TextBoxFor(s => s.requestFomsVM.PsNo, new { @class = "form-control", @placeholder = "Ps No", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Name</label>
+                                    @Html.TextBoxFor(s => s.Name, new { @class = "form-control", @placeholder = "Name", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Department Name</label>
+
+                                    @Html.TextBoxFor(s => s.DepartmentName, new { @class = "form-control", @placeholder = "Department Name", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Department Head</label>
+                                    @Html.TextBoxFor(s => s.DepartmentHead, new { @class = "form-control", @placeholder = "Department Head", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>On Behalf of</label>
+
+                                    @Html.TextBoxFor(s => s.OnBehalfof, new { @class = "form-control", @placeholder = "On Behalf of" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Location <span class="text-danger">*</span></label>
+                                    @Html.DropDownListFor(s => s.Location, new List<SelectListItem>
+                                                    {
+                                                       new SelectListItem{ Text="L&T Hazira East", Value = "L&T Hazira East" },
+                                                       new SelectListItem{ Text="L&T Hazira West", Value = "L&T Hazira West" },
+                                                       new SelectListItem{ Text="LTPC", Value = "LTPC" },
+                                                       new SelectListItem{ Text="L&T Powai", Value = "L&T Powai" },
+                                                       new SelectListItem{ Text="VHEW", Value = "VHEW" },
+                                                       }, "--Select Location--", new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Device Name <span class="text-danger">*</span></label>
+                                    @Html.TextBoxFor(s => s.DeviceName, new { @class = "form-control", @placeholder = "Device Name" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Device Type <span class="text-danger">*</span></label>
+                                    @Html.DropDownListFor(s => s.DeviceType, new List<SelectListItem>
+                                                    {
+                                                       new SelectListItem{ Text="Desktop", Value = "Desktop" },
+                                                       new SelectListItem{ Text="Laptop", Value = "Laptop" },
+                                                       new SelectListItem{ Text="Workstation", Value = "Workstation" },
+                                                      }, "--Select Device Type--", new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Device No</label>
+                                    @Html.TextBoxFor(s => s.DeviceNo, new { @class = "form-control", @placeholder = "Device No" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Shifting Type <span class="text-danger">*</span></label>
+                                    @Html.DropDownListFor(s => s.ShiftingType, new List<SelectListItem>
+                                                    {
+                                                       new SelectListItem{ Text="Inter Office Building", Value = "Inter Office Building" },
+                                                       new SelectListItem{ Text="Different Office Building", Value = "Different Office Building" },
+                                                       new SelectListItem{ Text="Inter Shop", Value = "Inter Shop" },
+                                                       new SelectListItem{ Text="Different Gate", Value = "Different Gate" },
+                                                       new SelectListItem{ Text="Different Shop", Value = "Different Shop" },
+                                                      }, "--Select Shifting Type--", new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>From Location</label>
+                                    @Html.TextBoxFor(s => s.FromLocation, new { @class = "form-control", @placeholder = "From Location" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>To Location</label>
+                                    @Html.TextBoxFor(s => s.ToLocation, new { @class = "form-control", @placeholder = "To Location" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Shifting Reason</label>
+                                @Html.TextAreaFor(s => s.ShiftingReason, new { @class = "form-control", @placeholder = "Shifting Reason" })
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="clsOwner">
+                                    <label>Owner Remarks</label>
+
+                                    @Html.TextAreaFor(s => s.OwnerRemarks, new { @class = "form-control", @placeholder = "Owner Remarks" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="clsDepartmentHead">
+                                    <label>DH Remarks</label>
+
+                                    @Html.TextAreaFor(s => s.DHRemarks, new { @class = "form-control", @placeholder = "DH Remarks" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="clsITHelpDeskAdmin">
+                                    <label>IT Helpdesk Admin Remarks</label>
+                                    @Html.TextAreaFor(s => s.ITHelpdeskAdminRemarks, new { @class = "form-control", @placeholder = "IT Helpdesk Admin Remarks" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <br />
+                        <div class="clsITHelpDesk">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>IT Helpdesk Remarks</label>
+                                    @Html.TextAreaFor(s => s.ITHelpdeskRemarks, new { @class = "form-control", @placeholder = "IT Helpdesk Remarks" })
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="">
+                                        <label>Updated in Sampatti</label>
+                                        @Html.DropDownListFor(s => s.UpdatedinSampatti, new List<SelectListItem>
+                                                        {
+                                                           new SelectListItem{ Text="Yes", Value = "Yes" },
+                                                           new SelectListItem{ Text="No", Value = "No" },
+                                                           }, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="HideClass">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div>
+                                        <button type="button" value="Submit" id="btnSubmit" onclick="DeviceShiftingController.funSubmitDeviceShiftingFormValue();" style="display: inline-block;  " class="btn btn-success"><span class=""></span> Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ApproveClass">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <button type="button" value="Approve" id="btnApprove" onclick="DeviceShiftingController.funApproveDeviceShiftingFormValue();" style="display: inline-block;  " class="btn btn-primary clsapprovebtn"><span class=""></span> Approve</button>
+                                    <button type="button" value="Close" id="btnClose" onclick="DeviceShiftingController.funCloseDeviceShiftingFormValue();" style="display: inline-block;  " class="btn btn-primary clsclosebtn"><span class=""></span>Complete</button>
+                                    <button type="button" value="Return" id="btnReturn" onclick="DeviceShiftingController.funReturnDeviceShiftingFormValue();" style="display: inline-block;  " class="btn btn-warning clsReturnbtn"><span class=""></span> Return</button>
+                                    <button type="button" value="Reject" id="btnReject" onclick="DeviceShiftingController.funRejectDeviceShiftingFormValue();" style="display: inline-block;  " class="btn btn-danger clsRejectbtn"><span class=""></span> Reject</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clsProcessSteps">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div id="" class="container">
+                <div class="PageSeparator col-md-12">
+                    <span class="PageSeparator-Span" id="spnMassage">Life Cycle</span>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="ibox">
+                            <div class="ibox-content" id="divRequestLine">
+                                <div class="form-group">
+                                    <div class="mt-element-step">
+                                        <div class="row step-line">
+                                            @*@if (ViewBag.Status == Enums.TarStatus.Submitted.DescriptionAttr())
+                                                {*@
+
+                                            @*//1*@
+                                            @if (Model.deviceShiftingFormProcessBarVM.Initiate != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col first done" style="width:17%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Initiate <br /> &nbsp;</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.deviceShiftingFormProcessBarVM.Initiate</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col " style="width:17%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Initiate <br /> &nbsp;</div><div class="mt-step-number bg-white">1</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*//2*@
+                                            @if (Model.deviceShiftingFormProcessBarVM.Owner != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:17%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Owner <br /> Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.deviceShiftingFormProcessBarVM.Owner</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col " style="width:17%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Owner <br /> Approval</div><div class="mt-step-number bg-white">2</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*//3*@
+                                            @if (Model.deviceShiftingFormProcessBarVM.DepartmentHeadApprove != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:17%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Department Head <br /> Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.deviceShiftingFormProcessBarVM.DepartmentHeadApprove</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:17%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Department Head <br /> Approval</div><div class="mt-step-number bg-white">3</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*//4*@
+                                            @if (Model.deviceShiftingFormProcessBarVM.ITHelpdeskAdminApprove != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:17%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Helpdesk Admin <br /> Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.deviceShiftingFormProcessBarVM.ITHelpdeskAdminApprove</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:17%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Helpdesk Admin <br /> Approval</div><div class="mt-step-number bg-white">4</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*//5*@
+                                            @if (Model.deviceShiftingFormProcessBarVM.ITHelpdeskApprove != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:17%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Helpdesk <br /> Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.deviceShiftingFormProcessBarVM.ITHelpdeskApprove</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:17%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Helpdesk <br /> Approval</div><div class="mt-step-number bg-white">5</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+
+                                            @*}*@
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        DeviceShiftingController.GetfunDocumentInit();
+    });
+</script>
+
+

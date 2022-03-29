@@ -1,0 +1,365 @@
+﻿@model ITApp.Model.DriveAccessFormsMV
+@{
+    ViewBag.Title = "DriveAcessForms";
+}
+<link href="~/Content/dataTables/datatables.min.css" rel="stylesheet" />
+<script src="~/Content/js/dataTables/datatables.min.js"></script>
+<script src="~/Content/js/dataTables/dataTables.bootstrap4.min.js"></script>
+<script src="~/Content/dataTables.fixedColumns.min.js"></script>
+<script src="~/Content/JSPages/DriveAccessForm.js"></script>
+<script src="~/Content/validate/jquery.validate.min.js"></script>
+<style>
+    /* .container {
+        width: 100%;
+        position: absolute;
+        z-index: 1;
+    }*/
+
+    .progressbar li {
+        float: left;
+        width: 15%;
+        position: relative;
+        /* text-align: center;*/
+    }
+    /* .progressbar li:before {
+            content: "1";
+            width: 30px;
+            height: 30px;
+        }*/
+
+    /*  .progressbar li:before {
+            content: "";
+            width: 30px;
+            height: 30px;
+             border: 2px solid #bebebe;
+            display: block;
+             margin: 0 auto 10px auto;
+            border-radius: 50%;
+            line-height: 27px;
+            background: white;
+            color: #bebebe;
+            text-align: center;
+            font-weight: bold;
+        }*/
+
+
+    .progressbar {
+        counter-reset: step;
+    }
+
+        .progressbar li:before {
+            content: counter(step);
+            counter-increment: step;
+            width: 100px;
+            height: 100px;
+            border: 2px solid #bebebe;
+            display: block;
+            margin-top: 0;
+            margin-right: auto;
+            margin-bottom: 10px;
+            margin-left: 0;
+            border-radius: 50%;
+            line-height: 100px;
+            background: white;
+            color: #bebebe;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .progressbar li:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 15px;
+            background: #979797;
+            top: 45px;
+            left: -90%;
+            z-index: -1;
+        }
+
+        .progressbar li:first-child:after {
+            content: none;
+        }
+
+        .progressbar li.active:first-child:before {
+            border-color: #3aac5d;
+            background: #3aac5d;
+            color: white;
+        }
+
+        .progressbar li.active + li:after {
+            background: #3aac5d;
+        }
+
+        .progressbar li.active + li.active:before {
+            border-color: #3aac5d;
+            background: #3aac5d;
+            color: white;
+            /*background: #fff;*/
+        }
+
+        /*.progressbar li::after {
+            background: #fff;
+        }*/
+
+        /*.progressbar li.active:first-child::after {
+            background: #fff;
+        }*/
+
+        /* .progressbar li.pending:before {
+            background: #fff;
+        }*/
+
+        .progressbar li.pending + li:before {
+            background: #fff;
+        }
+</style>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Drive Access Forms</h2>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form id="frmtblDriveAccess">
+                        @Html.HiddenFor(s => s.RequestFormId)
+                        @Html.HiddenFor(s => s.DriveAccessFormId)
+                        @Html.HiddenFor(s => s.requestFomsVM.PendingWith)
+                        @Html.HiddenFor(s => s.requestFomsVM.Status)
+                        @Html.HiddenFor(s => s.requestFomsVM.IsPending)
+                        @Html.HiddenFor(s => s.requestFomsVM.ReturnRejectWith)
+                        @Html.HiddenFor(s => s.requestFomsVM.LastPendingWith)
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Request No</label>
+
+                                    @Html.TextBoxFor(s => s.requestFomsVM.RequestNo, new { @class = "form-control", @placeholder = "Request No", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Request Date</label>
+                                    @Html.TextBoxFor(s => s.requestFomsVM.RequestDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @placeholder = "Request Date", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>PS No</label>
+
+                                    @Html.TextBoxFor(s => s.requestFomsVM.PsNo, new { @class = "form-control", @placeholder = "Ps No", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Name</label>
+                                    @Html.TextBoxFor(s => s.Name, new { @class = "form-control", @placeholder = "Name", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Department Name</label>
+
+                                    @Html.TextBoxFor(s => s.DepartmentName, new { @class = "form-control", @placeholder = "Department Name", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Department Head</label>
+                                    @Html.TextBoxFor(s => s.DepartmentHead, new { @class = "form-control", @placeholder = "Department Head", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>On Behalf of</label>
+
+                                    @Html.TextBoxFor(s => s.OnBehalfof, new { @class = "form-control", @placeholder = "On Behalf of" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Location <span class="text-danger">*</span></label>
+                                    @Html.DropDownListFor(s => s.Location, new List<SelectListItem>
+                                                    {
+                                                       new SelectListItem{ Text="L&T Hazira East", Value = "L&T Hazira East" },
+                                                       new SelectListItem{ Text="L&T Hazira West", Value = "L&T Hazira West" },
+                                                       new SelectListItem{ Text="LTPC", Value = "LTPC" },
+                                                       new SelectListItem{ Text="L&T Powai", Value = "L&T Powai" },
+                                                       new SelectListItem{ Text="VHEW", Value = "VHEW" },
+                                                       }, "--Select Location--", new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Reason</label>
+
+                                    @Html.TextAreaFor(s => s.Reason, new { @class = "form-control", @placeholder = "Reason" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Path</label>
+
+                                    @Html.TextBoxFor(s => s.Path, new { @class = "form-control", @placeholder = "Path" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="clsDepartmentHead">
+                                    <label>DH Remarks</label>
+
+                                    @Html.TextBoxFor(s => s.DHRemarks, new { @class = "form-control", @placeholder = "DH Remarks" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="clsInfraHead">
+                                    <label>IT Remarks</label>
+                                    @Html.TextBoxFor(s => s.ITDHRemarks, new { @class = "form-control", @placeholder = "IT Remarks" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="clsServerAdmin">
+                                    <label>SA Remarks</label>
+
+                                    @Html.TextAreaFor(s => s.SARemarks, new { @class = "form-control", @placeholder = "SA Remarks" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="HideClass">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div>
+                                        <button type="button" value="Submit" id="btnSubmit" onclick="DriveAccessController.funSubmitDriveAccessFormValue();" style="display: inline-block;  " class="btn btn-success"><span class=""></span> Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ApproveClass">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <button type="button" value="Approve" id="btnApprove" onclick="DriveAccessController.funApproveDriveAccessFormValue();" style="display: inline-block;  " class="btn btn-primary clsapprovebtn"><span class=""></span> Approve</button>
+                                    <button type="button" value="Close" id="btnClose" onclick="DriveAccessController.funCloseDriveAccessFormValue();" style="display: inline-block;  " class="btn btn-primary clsclosebtn"><span class=""></span>Close</button>
+                                    <button type="button" value="Return" id="btnReturn" onclick="DriveAccessController.funReturnDriveAccessFormValue();" style="display: inline-block;  " class="btn btn-warning clsReturnbtn"><span class=""></span> Return</button>
+                                    <button type="button" value="Reject" id="btnReject" onclick="DriveAccessController.funRejectDriveAccessFormValue();" style="display: inline-block;  " class="btn btn-danger clsRejectbtn"><span class=""></span> Reject</button>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="CloseClass">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                </div>
+                                <div class="col-sm-6">
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clsProcessSteps">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div id="" class="container">
+                <div class="PageSeparator col-md-12">
+                    <span class="PageSeparator-Span" id="spnMassage">Life Cycle</span>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="ibox">
+                            <div class="ibox-content" id="divRequestLine">
+                                <div class="form-group">
+                                    <div class="mt-element-step">
+                                        <div class="row step-line">
+                                            @*@if (ViewBag.Status == Enums.TarStatus.Submitted.DescriptionAttr())
+                                                {*@
+
+                                            @*//1*@
+                                            @if (Model.driveAccessFormsProcessBarVM.Initiate != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col first done" style="width:22%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Initiate <br /> &nbsp;</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.driveAccessFormsProcessBarVM.Initiate</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col " style="width:22%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Initiate <br /> &nbsp;</div><div class="mt-step-number bg-white">1</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*//2*@
+                                            @if (Model.driveAccessFormsProcessBarVM.DepartmentHeadApprove != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:22%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Department Head <br /> Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.driveAccessFormsProcessBarVM.DepartmentHeadApprove</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:22%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Department Head <br /> Approval</div><div class="mt-step-number bg-white">2</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*//3*@
+                                            @if (Model.driveAccessFormsProcessBarVM.InfraHeadApprove != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:22%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Infra Head <br /> Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.driveAccessFormsProcessBarVM.InfraHeadApprove</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:22%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Infra Head <br /> Approval</div><div class="mt-step-number bg-white">3</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*//4*@
+                                            @if (Model.driveAccessFormsProcessBarVM.ServerAdmin != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:22%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Server Admin <br /> Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.driveAccessFormsProcessBarVM.ServerAdmin</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:22%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Server Admin <br /> Approval</div><div class="mt-step-number bg-white">4</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                           
+                                            @*}*@
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        DriveAccessController.GetfunDocumentInit();
+       // DriveAccessController.funGetProcessSteps();
+    });
+</script>
+

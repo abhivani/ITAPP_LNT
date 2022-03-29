@@ -1,0 +1,591 @@
+﻿@model ITApp.Model.NewITRequisitionFormVM
+@{
+    ViewBag.Title = "NewItRequisitionForms";
+}
+<link href="~/Content/dataTables/datatables.min.css" rel="stylesheet" />
+<script src="~/Content/js/dataTables/datatables.min.js"></script>
+<script src="~/Content/js/dataTables/dataTables.bootstrap4.min.js"></script>
+<script src="~/Content/dataTables.fixedColumns.min.js"></script>
+@*<script src="~/Content/JSPages/USBRequestForm.js"></script>*@
+<script src="~/Content/JSPages/NewItRequisition.js"></script>
+<script src="~/Content/validate/jquery.validate.min.js"></script>
+
+<style>
+
+    .progressbar li {
+        float: left;
+        width: 15%;
+        position: relative;
+    }
+
+    .progressbar {
+        counter-reset: step;
+    }
+
+        .progressbar li:before {
+            content: counter(step);
+            counter-increment: step;
+            width: 100px;
+            height: 100px;
+            border: 2px solid #bebebe;
+            display: block;
+            margin-top: 0;
+            margin-right: auto;
+            margin-bottom: 10px;
+            margin-left: 0;
+            border-radius: 50%;
+            line-height: 100px;
+            background: white;
+            color: #bebebe;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .progressbar li:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 15px;
+            background: #979797;
+            top: 45px;
+            left: -90%;
+            z-index: -1;
+        }
+
+        .progressbar li:first-child:after {
+            content: none;
+        }
+
+        .progressbar li.active:first-child:before {
+            border-color: #3aac5d;
+            background: #3aac5d;
+            color: white;
+        }
+
+        .progressbar li.active + li:after {
+            background: #3aac5d;
+        }
+
+        .progressbar li.active + li.active:before {
+            border-color: #3aac5d;
+            background: #3aac5d;
+            color: white;
+        }
+
+        .progressbar li.pending + li:before {
+            background: #fff;
+        }
+</style>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>New IT Requisition Forms</h2>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form id="frmtblNewIt">
+
+                        @Html.HiddenFor(s => s.RequestFormId)
+                        @Html.HiddenFor(s => s.NewITRequisitionID)
+                        @Html.HiddenFor(s => s.requestFomsVM.PendingWith)
+                        @Html.HiddenFor(s => s.requestFomsVM.Status)
+                        @Html.HiddenFor(s => s.requestFomsVM.IsPending)
+                        @Html.HiddenFor(s => s.requestFomsVM.ReturnRejectWith)
+                        @Html.HiddenFor(s => s.requestFomsVM.LastPendingWith)
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Request No</label>
+
+                                    @Html.TextBoxFor(s => s.requestFomsVM.RequestNo, new { @class = "form-control", @placeholder = "Request No", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Request Date</label>
+                                    @Html.TextBoxFor(s => s.requestFomsVM.RequestDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @placeholder = "Request Date", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>PS No</label>
+
+                                    @Html.TextBoxFor(s => s.requestFomsVM.PsNo, new { @class = "form-control", @placeholder = "Ps No", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Name</label>
+                                    @Html.TextBoxFor(s => s.Name, new { @class = "form-control", @placeholder = "Name", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Department Name</label>
+
+                                    @Html.TextBoxFor(s => s.Department, new { @class = "form-control", @placeholder = "Department Name", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Department Head</label>
+                                    @Html.TextBoxFor(s => s.DepartmentHead, new { @class = "form-control", @placeholder = "Department Head", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>On Behaif Of</label>
+
+                                    @Html.TextBoxFor(s => s.OnBehalfof, new { @class = "form-control", @placeholder = "On Behalf of" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Location <span class="text-danger">*</span></label>
+                                    @Html.DropDownListFor(s => s.Location, new List<SelectListItem>
+                                                    {
+                                                       new SelectListItem{ Text="L&T Hazira East", Value = "L&T Hazira East" },
+                                                       new SelectListItem{ Text="L&T Hazira West", Value = "L&T Hazira West" },
+                                                       new SelectListItem{ Text="LTPC", Value = "LTPC" },
+                                                       new SelectListItem{ Text="L&T Powai", Value = "L&T Powai" },
+                                                       new SelectListItem{ Text="VHEW", Value = "VHEW" },
+                                                       }, "--Select Location--", new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Device</label>
+                                    @Html.DropDownListFor(s => s.Device, new List<SelectListItem>
+                                                    {
+                                                       new SelectListItem{ Text="Desktop", Value = "Desktop" },
+                                                       new SelectListItem{ Text="Laptop", Value = "Laptop" },
+                                                       }, "--Select Device--", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>Reason</label>
+
+                                    @Html.TextAreaFor(s => s.Reason, new { @class = "form-control", @placeholder = "Reason" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="DHRemarks">
+                                    <label>DH Remarks</label>
+                                    @Html.TextAreaFor(s => s.DHRemarks, new { @class = "form-control", @placeholder = "DH Remarks" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="ITDHRemark">
+                                    <label>It DH Remark</label>
+                                    @Html.TextAreaFor(s => s.ITDHRemark, new { @class = "form-control", @placeholder = "IT DH Remark" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="ITHDAdminRemark">
+                                    <label>IT HD Admin Remark</label>
+                                    @Html.TextAreaFor(s => s.ITHDAdminRemark, new { @class = "form-control", @placeholder = "IT HD Admin Remark" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <br />
+
+                        @*======================================================================*@
+
+
+
+
+                        @*======================================================================*@
+
+                        <div class="clsALLIT">
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" style="text-decoration: none;">
+                                            <span class="glyphicon glyphicon-plus-sign"> </span>  IT Asset Details
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="ITHelpDesk">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>Asset ID</label>
+                                                        @Html.TextAreaFor(s => s.AssentID, new { @class = "form-control", @placeholder = "Asset ID" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>Make</label>
+                                                        @Html.TextAreaFor(s => s.Mark, new { @class = "form-control", @placeholder = "Make" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>Model</label>
+                                                        @Html.TextAreaFor(s => s.Model, new { @class = "form-control", @placeholder = "Model" })
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <br />
+
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>Family</label>
+                                                        @*@Html.TextAreaFor(s => s.Family, new { @class = "form-control", @placeholder = "Family" })*@
+                                                        @Html.DropDownListFor(s => s.Family, new List<SelectListItem>
+                                                                       {
+                                                                          new SelectListItem{ Text="Laptop", Value = "Laptop" },
+                                                                          new SelectListItem{ Text="Desktop", Value = "Desktop" },
+                                                                          }, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>Operating System</label>
+                                                        @Html.TextAreaFor(s => s.OperationSystem, new { @class = "form-control", @placeholder = "Operating System" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>Monitor / TFT Size </label>
+                                                        @Html.TextAreaFor(s => s.MonitorSize, new { @class = "form-control", @placeholder = "Monitor / TFT Size" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>Serial No</label>
+                                                        @Html.TextAreaFor(s => s.SerialNO, new { @class = "form-control", @placeholder = "Serial NO" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>MACAddress</label>
+                                                        @Html.TextAreaFor(s => s.MACAddress, new { @class = "form-control", @placeholder = "MAC Address" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>Installation Remark</label>
+                                                        @Html.TextAreaFor(s => s.InstallationRemark, new { @class = "form-control", @placeholder = "InstallationRemark" })
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>HDD</label>
+                                                        @Html.TextAreaFor(s => s.HDD, new { @class = "form-control", @placeholder = "HDD" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>RAM</label>
+                                                        @Html.TextAreaFor(s => s.RAM, new { @class = "form-control", @placeholder = "RAM" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>Delivery By</label>
+                                                        @*@Html.TextAreaFor(s => s.DeliveryBY, new { @class = "form-control", @placeholder = "Delivery BY" })*@
+                                                        @Html.DropDownListFor(s => s.DeliveryBY, new List<SelectListItem>
+                                                        {
+                                                             new SelectListItem{ Text="Select DeliveryBY", Value = "" },
+                                                        }, new { id = "DeliveryBY", @class = "form-control", Name = "DeliveryBY" })
+
+
+                                                        @Html.HiddenFor(s => s.DeliveryBY, new { id = "hdnDeliveryBy" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>Antivirus Installed ?</label>
+                                                        @Html.DropDownListFor(s => s.AntivirusInstalled, new List<SelectListItem>
+                                                                       {
+                                                                          new SelectListItem{ Text="Yes", Value = "Yes" },
+                                                                          new SelectListItem{ Text="No", Value = "No" },
+                                                                          }, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>Software Installed ?</label>
+                                                        @Html.DropDownListFor(s => s.SoftwareInstalled, new List<SelectListItem>
+                                                                       {
+                                                                          new SelectListItem{ Text="Yes", Value = "Yes" },
+                                                                          new SelectListItem{ Text="No", Value = "No" },
+                                                                          }, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>Domain Registration </label>
+                                                        @Html.DropDownListFor(s => s.DomainRegistion, new List<SelectListItem>
+                                                                       {
+                                                                          new SelectListItem{ Text="Yes", Value = "Yes" },
+                                                                          new SelectListItem{ Text="No", Value = "No" },
+                                                                          }, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>One Drive Configured ?</label>
+                                                        @Html.DropDownListFor(s => s.OneDriveConfigured, new List<SelectListItem>
+                                                                       {
+                                                                          new SelectListItem{ Text="Yes", Value = "Yes" },
+                                                                          new SelectListItem{ Text="No", Value = "No" },
+                                                                          }, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>Bit locker Configured ?</label>
+                                                        @Html.DropDownListFor(s => s.BitlockerConfigured, new List<SelectListItem>
+                                                                       {
+                                                                          new SelectListItem{ Text="Yes", Value = "Yes" },
+                                                                          new SelectListItem{ Text="No", Value = "No" },
+                                                                          }, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                        <br />
+
+                                        <div class="Delivery">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>Location</label>
+                                                        @Html.TextAreaFor(s => s.LocationByDelivery, new { @class = "form-control", @placeholder = "Location" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="">
+                                                        <label>Area</label>
+                                                        @Html.TextAreaFor(s => s.Area, new { @class = "form-control", @placeholder = "Area" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="clsOTP">
+                                                        <label>OTP </label>
+                                                        @Html.TextAreaFor(s => s.OTP, new { @class = "form-control", @placeholder = "OTP" })
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        @*=====================================================================*@
+                        <div class="HideClass">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div>
+                                        <button type="button" value="Submit" id="btnSubmit" onclick="NewItRequisitionController.funSubmitNewItFromValue();" style="display: inline-block;  " class="btn btn-success"><span class=""></span> Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ApproveClass">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <button type="button" value="Approve" id="btnApprove" onclick="NewItRequisitionController.funApproveNewItFromValue();" style="display: inline-block;  " class="btn btn-primary"><span class=""></span> Approve</button>
+                                    <button type="button" value="Return" id="btnReturn" onclick="NewItRequisitionController.funReturnNewItFromValue();" style="display: inline-block;  " class="btn btn-warning"><span class=""></span> Return</button>
+                                    <button type="button" value="Reject" id="btnReject" onclick="NewItRequisitionController.funRejectNewItFromValue();" style="display: inline-block;  " class="btn btn-danger"><span class=""></span> Reject</button>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="Readyfordeliverys">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <button type="button" value="Procurement" id="btnProcurement" onclick="NewItRequisitionController.funUnderProcessFromValue();" style="display: inline-block;  " class="btn btn-warning"><span class=""></span> Under Procurement</button>
+                                    <button type="button" value="Delivery" id="btnDelivery" onclick="NewItRequisitionController.funReadyForDelivery();" style="display: inline-block;  " class="btn btn-primary"><span class=""></span> Ready for Delivery</button>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="CloseClass">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                </div>
+                                <div class="col-sm-6">
+                                    <button type="button" value="Close" id="btnClose" onclick="NewItRequisitionController.funCloseNewItFromValue();" style="display: inline-block;  " class="btn btn-primary"><span class=""></span>Complete</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clsProcessSteps">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div id="" class="container">
+                <div class="PageSeparator col-md-12">
+                    <span class="PageSeparator-Span" id="spnMassage">Life Cycle</span>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="ibox">
+                            <div class="ibox-content" id="divRequestLine">
+                                <div class="form-group">
+                                    <div class="mt-element-step">
+                                        <div class="row step-line">
+                                            @*@if (ViewBag.Status == Enums.TarStatus.Submitted.DescriptionAttr())
+                                                {*@
+
+                                            @*//1*@
+                                            @if (Model.NewITRequisitionProcessBarVM.Initiate != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col first done" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Initiate <br /> &nbsp;</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.NewITRequisitionProcessBarVM.Initiate</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col " style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Initiate <br /> &nbsp;</div><div class="mt-step-number bg-white">1</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*//2*@
+                                            @if (Model.NewITRequisitionProcessBarVM.DepartmentHeadApproval != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Department Head <br /> Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.NewITRequisitionProcessBarVM.DepartmentHeadApproval</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Department Head <br /> Approval</div><div class="mt-step-number bg-white">2</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*//3*@
+                                            @if (Model.NewITRequisitionProcessBarVM.ITDepartmentHeadApproval != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Department Head <br /> Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.NewITRequisitionProcessBarVM.ITDepartmentHeadApproval</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Department Head <br /> Approval</div><div class="mt-step-number bg-white">3</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            @*//4*@
+                                            @if (Model.NewITRequisitionProcessBarVM.ITHelpdeskAdminApprove != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Helpdesk Admin<br /> Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.NewITRequisitionProcessBarVM.ITHelpdeskAdminApprove</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Helpdesk Admin<br /> Approval</div><div class="mt-step-number bg-white">4</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+
+                                            @*/5*@
+                                            @if (Model.NewITRequisitionProcessBarVM.ITHelpdeskApproval != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Helpdesk <br />Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.NewITRequisitionProcessBarVM.ITHelpdeskApproval</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">IT Helpdesk <br />Approval</div><div class="mt-step-number bg-white">5</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+
+                                            @if (Model.NewITRequisitionProcessBarVM.Compelte != null)
+                                            {
+                                                <div class="col-md-1 mt-step-col done" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800">Complete <br />Approval</div><div class="mt-step-number bg-white"><li class="fa fa-check"></li></div><div class="mt-step-title font-grey-cascade" style="font-size:12px">@Model.NewITRequisitionProcessBarVM.Compelte</div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1 mt-step-col" style="width:15%"><div class="mt-step-content font-grey-cascade" style="font-size:14px; font-weight:800"> <br /> Complete</div><div class="mt-step-number bg-white">6</div><div class="mt-step-title font-grey-cascade" style="font-size:12px"></div><div class="mt-step-content font-grey-cascade"></div></div>
+                                            }
+
+                                            @*}*@
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        NewItRequisitionController.funGetDeliveryByData();
+        NewItRequisitionController.GetfunDocumentInit();
+        //USBRequestController.funGetProcessSteps();       
+    });
+</script>

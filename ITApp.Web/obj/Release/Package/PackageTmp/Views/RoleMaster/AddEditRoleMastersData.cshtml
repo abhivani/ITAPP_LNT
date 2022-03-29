@@ -1,0 +1,151 @@
+﻿@model ITApp.Model.tblRoleMaster
+@{
+    ViewBag.Title = "AddEditRoleMastersData";
+}
+
+<link href="~/Content/dataTables/datatables.min.css" rel="stylesheet" />
+<script src="~/Content/js/dataTables/datatables.min.js"></script>
+<script src="~/Content/js/dataTables/dataTables.bootstrap4.min.js"></script>
+<script src="~/Content/dataTables.fixedColumns.min.js"></script>
+<script src="~/Content/JSPages/RoleMaster.js"></script>
+<script src="~/Content/validate/jquery.validate.min.js"></script>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Role Master</h2>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="row">
+                        <form id="frmtblRoleMaster">
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(x => Model.RoleId)
+
+                            <div class="panel">
+
+                                <div class="panel-body">
+                                    <div id="divAlert">
+                                        @*@Html.Raw(HelperMessage.alertMessage(HelperMessage.ResponceResult.WARNING, string.Format(HelperMessage.RequiredByObject, "All")))*@
+
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-sm-6">
+                                            <div class="col-md-12">
+                                                <label><span>Psno </span> <span class="text-danger">*</span></label>
+
+
+                                                @Html.TextBoxFor(s => s.PsNo, new { id = "PsNo", @class = "form-control require", @placeholder = "PsNo" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="col-md-12">
+                                                <label><span>Name </span> <span class="text-danger">*</span> </label>
+
+                                                @Html.TextBoxFor(m => m.Name, new { id = "Name", @class = "form-control", @placeholder = "Name", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="col-md-12">
+                                                <label><span>Role </span> <span class="text-danger">*</span> </label>
+
+                                                @* @Html.TextBoxFor(m => m.Role, new { id = "Role", @class = "form-control", @placeholder = "Role" })*@
+                                                @Html.DropDownList("Role", new List<SelectListItem>
+                                                  {
+                                                      new SelectListItem{ Text="IT Security", Value = "IT Security" },
+                                                      new SelectListItem{ Text="IT Department Head", Value = "IT Department Head" },
+                                                      new SelectListItem{ Text="IT Helpdesk", Value = "IT Helpdesk" },
+                                                      new SelectListItem{ Text="IT Helpdesk Delivery", Value = "IT Helpdesk Delivery" },
+                                                      new SelectListItem{ Text="Infra Head", Value = "Infra Head" },
+                                                      new SelectListItem{ Text="Server Admin", Value = "Server Admin" },                                                      
+                                                      new SelectListItem{ Text="IT Helpdesk Admin", Value = "IT Helpdesk Admin" },
+                                                      new SelectListItem{ Text="Owner", Value = "Owner" },
+                                                      
+                                                              }, "--Select Role--", new { @class = "form-control", id = "Role" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />  
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="col-md-12">
+                                                <label><span>Location</span></label>
+                                                @Html.DropDownList("Location", new List<SelectListItem>
+                                                   {
+                                                       new SelectListItem{ Text="L&T Hazira East", Value = "L&T Hazira East" },
+                                                       new SelectListItem{ Text="L&T Hazira West", Value = "L&T Hazira West" },
+                                                       new SelectListItem{ Text="LTPC", Value = "LTPC" },
+                                                       new SelectListItem{ Text="L&T Powai", Value = "L&T Powai" },
+                                                       new SelectListItem{ Text="VHEW", Value = "VHEW" },
+                                                               }, "--Select Location--", new { @class = "form-control", id = "Location" })
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    @*</div>*@
+                                </div>
+                                <br />
+
+                                <div class="row">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-2">
+                                        <center>
+                                            @*<button type="submit" value="Submit" id="btnSubmit"  style="display: inline-block; max-width: 100%; width: 100%; " class="btn btn-success"><span class=""></span> Submit</button>*@
+                                            <button type="button" value="Submit" id="btnSubmit" onclick="RoleMasterController.funSaveRoleMasterValue();" style="display: inline-block;  " class="btn btn-success"><span class=""></span> Submit</button>
+
+                                        </center>
+                                    </div>
+                                    <div class="col-md-5"></div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        RoleMasterController.GetfunAutocomInit();
+    });
+
+
+</script>
+
+<script>
+
+    function extractLast(term) {
+        return MultipleAutocompsplit(term).pop();
+    }
+
+    function MultipleAutocompsplit(val) {
+        return val.split(/,\s*/);
+    }
+
+    $('#bltclosebtn').click(function () {
+        CloseModalPopup();
+    });
+
+
+
+</script>

@@ -1,0 +1,114 @@
+﻿@model ITApp.Model.tblRoleMaster
+
+<div class="modal-body">
+
+    <form id="frmtblRoleMaster">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(x => Model.RoleId)
+
+        <div id="divAlert">
+            @*@Html.Raw(HelperMessage.alertMessage(HelperMessage.ResponceResult.WARNING, string.Format(HelperMessage.RequiredByObject, "All")))*@
+
+        </div>
+
+        <div class="single">
+            <div class="row">
+                <div class="col-md-8"><h3><span style="color:#004d99">Role Master</span></h3></div>
+                <div class="col-md-4" style="padding-top:10px">
+
+                    <button type="button" id="bltclosebtn" class="btn btn-primary" data-target="#ModelPopupGraph" style="display:inline-block;width:100%;background-color:#0099cc"><span class="glyphicon glyphicon-remove"></span> CLOSE</button>
+                </div>
+            </div>
+            <hr />
+            <div class="panel panel-primary">
+
+                <div class="panel-body">
+
+                    <div class="row">
+
+                        <div class="col-sm-12">
+                            <p><span style="color: #009900">Psno </span> <span class="text-danger">*</span></p>
+
+
+                            @Html.TextBoxFor(s => s.PsNo, Model.PsNo, new { id = "PsNo", @class = "form-control require", @placeholder = "PsNo" })
+
+
+                        </div>
+                        <br />
+                        <div class="col-sm-12">
+                            <p><span style="color: #009900">Name </span> <span class="text-danger">*</span> </p>
+
+                            @Html.TextBoxFor(m => m.Name, Model.Name, new { id = "Name", @class = "form-control", @placeholder = "Name", @readonly = "readonly" })
+
+                        </div>
+                        @*<br />
+                        <div class="col-sm-12">
+                            <p><span style="color: #009900">Role </span> <span class="text-danger">*</span> </p>
+
+                            @Html.TextBoxFor(m => m.Role, Model.Role, new { id = "Role", @class = "form-control", @placeholder = "Role" })
+
+                        </div>
+                        <br />
+                        <div class="col-sm-12">
+                            <p><span style="color: #009900">Location</span></p>
+                            @Html.DropDownList("Location", new List<SelectListItem>
+                               {
+                               new SelectListItem{ Text="Hazira", Value = "Hazira" },
+                               new SelectListItem{ Text="Powai", Value = "Powai" },
+                               new SelectListItem{ Text="VHEW", Value = "VHEW" },
+                                           }, "--Select Location--", new { @class = "form-control", id = "Location" })
+
+
+                        </div>*@
+
+
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-md-5"></div>
+                        <div class="col-md-2">
+                            <center>
+                                @*<button type="submit" value="Submit" id="btnSubmit"  style="display: inline-block; max-width: 100%; width: 100%; " class="btn btn-success"><span class=""></span> Submit</button>*@
+                                <button type="submit" value="Submit" id="btnSubmit" onclick="RoleMasterController.funSaveRoleMasterValue();" style="display: inline-block;  " class="btn btn-success"><span class=""></span> Submit</button>
+
+                            </center>
+                        </div>
+                        <div class="col-md-5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        RoleMasterController.GetfunAutocomInit();
+    });  
+
+   
+</script>
+
+<script>
+
+    function extractLast  (term) {
+        return MultipleAutocompsplit(term).pop();
+    }
+
+    function MultipleAutocompsplit (val) {
+        return val.split(/,\s*/);
+    }
+
+    $('#bltclosebtn').click(function () {
+        CloseModalPopup();
+    });
+
+
+
+</script>
+

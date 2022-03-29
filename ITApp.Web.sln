@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITApp.Web", "ITApp.Web\ITApp.Web.csproj", "{20EBBFBC-9069-4D5E-BDB8-445D716F9CD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITApp.Implement", "ITApp.Implement\ITApp.Implement.csproj", "{9239D00D-E666-4752-8C1C-718C194DB234}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITApp.Model", "ITApp.Model\ITApp.Model.csproj", "{897EF96B-C306-488A-9EC3-67951B35EAB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITApp.Utility", "ITApp.Utility\ITApp.Utility.csproj", "{13B5D7B6-2AA6-45EB-8E87-B6A6C34030B2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{20EBBFBC-9069-4D5E-BDB8-445D716F9CD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20EBBFBC-9069-4D5E-BDB8-445D716F9CD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20EBBFBC-9069-4D5E-BDB8-445D716F9CD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20EBBFBC-9069-4D5E-BDB8-445D716F9CD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9239D00D-E666-4752-8C1C-718C194DB234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9239D00D-E666-4752-8C1C-718C194DB234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9239D00D-E666-4752-8C1C-718C194DB234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9239D00D-E666-4752-8C1C-718C194DB234}.Release|Any CPU.Build.0 = Release|Any CPU
+		{897EF96B-C306-488A-9EC3-67951B35EAB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{897EF96B-C306-488A-9EC3-67951B35EAB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{897EF96B-C306-488A-9EC3-67951B35EAB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{897EF96B-C306-488A-9EC3-67951B35EAB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13B5D7B6-2AA6-45EB-8E87-B6A6C34030B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13B5D7B6-2AA6-45EB-8E87-B6A6C34030B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13B5D7B6-2AA6-45EB-8E87-B6A6C34030B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13B5D7B6-2AA6-45EB-8E87-B6A6C34030B2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {51D51EF1-B925-4AC4-A435-EE91B51A96EC}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://vhzpdtfs.lthed.com/tfs/hed-it
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ITApp.Implement\\ITApp.Implement.csproj
+		SccProjectName1 = ITApp.Implement
+		SccLocalPath1 = ITApp.Implement
+		SccProjectUniqueName2 = ITApp.Model\\ITApp.Model.csproj
+		SccProjectName2 = ITApp.Model
+		SccLocalPath2 = ITApp.Model
+		SccProjectUniqueName3 = ITApp.Utility\\ITApp.Utility.csproj
+		SccProjectName3 = ITApp.Utility
+		SccLocalPath3 = ITApp.Utility
+		SccProjectUniqueName4 = ITApp.Web\\ITApp.Web.csproj
+		SccProjectName4 = ITApp.Web
+		SccLocalPath4 = ITApp.Web
+	EndGlobalSection
+EndGlobal
